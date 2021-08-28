@@ -19,8 +19,7 @@ class BuffPipeline:
                       'steam_price($)': '',
                       'buff_price(¥)': ''}
         df = pd.DataFrame(goods_dict, index=[0])
-        df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig', mode='w',
-                  )
+        df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig', mode='w')
 
     def process_item(self, item, spider):
         goods_id = item['goods_id']
