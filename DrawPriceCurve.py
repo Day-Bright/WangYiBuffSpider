@@ -1,4 +1,6 @@
 import json
+
+import pylab
 from pylab import *
 
 
@@ -10,8 +12,9 @@ class DrawPriceCurve(object):
         'horizontalalignment': 'center',
     }
 
-    def __init__(self, price_dict):
+    def __init__(self, price_dict, goods_name):
         self.price_dict = price_dict
+        self.goods_name = goods_name
 
     def unix(self, timestamp_int):
         timestamp = int(timestamp_int / 1000)
@@ -42,7 +45,8 @@ class DrawPriceCurve(object):
         plt.subplots_adjust(bottom=0.15)
         plt.xlabel("time", DrawPriceCurve.font)  # X轴标签
         plt.ylabel("price", DrawPriceCurve.font)  # Y轴标签
-        plt.title("价格折线图", DrawPriceCurve.font)  # 标题
+        plt.title("{goods_name}价格折线图".format(goods_name=self.goods_name), DrawPriceCurve.font)  # 标题
+        plt.savefig(r'C:\Users\Me\Desktop\BuffSpider\{goods_name}'.format(goods_name=self.goods_name))
         plt.show()
 
 
@@ -103,5 +107,5 @@ if __name__ == "__main__":
                                                            [1630080000000, 6814.59], [1630123200000, 6680.0],
                                                            [1630126800000, 6570.0], [1630152000000, 6560.0]],
                                          'price_type': 'BUFF价格', 'steam_price_currency': '美元'}, 'msg': None}
-    d = DrawPriceCurve(price_dict)
+    d = DrawPriceCurve(price_dict, goods_name="xxx")
     d.draw()
