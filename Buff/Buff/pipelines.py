@@ -7,9 +7,14 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 import pandas as pd
+import pymongo
 
 
 class BuffPipeline:
+
+    """
+    写入csv文件
+
     df = None
 
     def open_spider(self, spider):
@@ -18,21 +23,31 @@ class BuffPipeline:
                       'steam_price_cny(¥)': '',
                       'steam_price($)': '',
                       'buff_price(¥)': ''}
-        df = pd.DataFrame(goods_dict, index=[0])
-        df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig', mode='w')
+        BuffPipeline.df = pd.DataFrame(goods_dict, index=[0])
+        BuffPipeline.df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig',
+                               mode='w')
 
     def process_item(self, item, spider):
-        goods_id = item['goods_id']
-        goods_name = item['goods_name']
-        steam_price_cny = item['steam_price_cny']
-        steam_price = item['steam_price']
-        buff_price = item['buff_price']
-        goods_dict = {'goods_id': goods_id,
-                      'goods_name': goods_name,
-                      'steam_price_cny(¥)': steam_price_cny,
-                      'steam_price($)': steam_price,
-                      'buff_price(¥)': buff_price}
-        df = pd.DataFrame(goods_dict, index=[0])
-        df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig', mode='a',
-                  na_rep='null', header=False)
+        BuffPipeline.df = pd.DataFrame(dict(item), index=[0])
+        BuffPipeline.df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig',
+                               mode='a', na_rep='null', header=False)
         return item
+
+    """
+
+    """
+    
+    写入MongoDB
+    
+    def __init__(self):
+        super().__init__()
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client["test"]
+        self.col = db["price"]
+
+    def process_item(self, item, spider):
+        print(item)
+        self.col.insert_one(dict(item))
+        return item
+    
+    """
