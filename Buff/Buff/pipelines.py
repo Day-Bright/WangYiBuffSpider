@@ -11,7 +11,7 @@ import pymongo
 
 
 class BuffPipeline:
-    
+
     """
     写入csv文件
 
@@ -32,21 +32,22 @@ class BuffPipeline:
         df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig')
         return item
 
-    """
 
-    """
-    
     写入MongoDB
 
     def __init__(self):
         super().__init__()
         client = pymongo.MongoClient("mongodb://localhost:27017/")
         db = client["test"]
-        self.col = db["price"]
+        self.col = db["goods_price"]
 
     def process_item(self, item, spider):
         print(item)
         self.col.insert_one(dict(item))
         return item
-    
+
     """
+
+
+
+
