@@ -11,21 +11,14 @@ import pymongo
 
 
 class BuffPipeline:
-
+    
     """
     写入csv文件
 
     df = None
 
     def open_spider(self, spider):
-        goods_dict = {'goods_id': '',
-                      'goods_name': '',
-                      'steam_price_cny(¥)': '',
-                      'steam_price($)': '',
-                      'buff_price(¥)': ''}
-        BuffPipeline.df = pd.DataFrame(goods_dict, index=[0])
-        BuffPipeline.df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig',
-                               mode='w')
+        pass
 
     def process_item(self, item, spider):
         BuffPipeline.df = pd.DataFrame(dict(item), index=[0])
@@ -33,12 +26,18 @@ class BuffPipeline:
                                mode='a', na_rep='null', header=False)
         return item
 
+    def close_spider(self, item):
+        df = pd.read_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", header=None,
+                         names=["goods_id", "goods_name", "steam_price_cny(¥)", "steam_price($)", "buff_price(¥)"])
+        df.to_csv(r"C:\Users\Me\Desktop\BuffSpider\goods_price.csv", index=False, encoding='utf_8_sig')
+        return item
+
     """
 
     """
     
     写入MongoDB
-    
+
     def __init__(self):
         super().__init__()
         client = pymongo.MongoClient("mongodb://localhost:27017/")
