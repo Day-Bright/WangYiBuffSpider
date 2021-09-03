@@ -43,9 +43,9 @@ class DrawPriceCurve(object):
         plt.yticks(size=30, weight='bold')
         plt.margins(0.02, 0.02)  # 设置x,y轴边距
         plt.subplots_adjust(bottom=0.15)
-        plt.xlabel("time", DrawPriceCurve.font)  # X轴标签
-        plt.ylabel("price", DrawPriceCurve.font)  # Y轴标签
-        plt.title("{goods_name}价格折线图".format(goods_name=self.goods_name), DrawPriceCurve.font)  # 标题
+        plt.xlabel("time", self.font)  # X轴标签
+        plt.ylabel("price", self.font)  # Y轴标签
+        plt.title("{goods_name}价格折线图".format(goods_name=self.goods_name), self.font)  # 标题
         plt.savefig(r'C:\Users\Me\Desktop\BuffSpider\{goods_name}'.format(goods_name=self.goods_name))
         plt.show()
 
